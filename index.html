@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ханойские башни</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .content {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .towers__wrapper {
+        border: 1px solid black;
+        background-color: beige;
+        width: 900px;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .towers {
+        display: flex;
+    }
+    .tower {
+        width: 260px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+    }
+    .ring_wrapper {
+        display: flex;
+        justify-content: center;
+        z-index: 1;
+    }
+    .ring {
+        margin: 5px;
+        width: 250px;
+        height: 50px;
+    }
+    .n_3 {
+    }
+    .n_2 {
+        width: 200px;
+    }
+    .n_1 {
+        width: 150px;
+    }
+    .visible {
+        background-color: crimson;
+        border-radius: 20px;
+        border: 2px solid darkorange;
+    }
+    .hidden {
+        background-color: beige;
+        border: 2px solid beige;
+    }
+    .tower__skeleton {
+        position: absolute;
+        display: flex;
+        width: 100%;
+        z-index: 0;
+    }
+    .skeleton {
+        margin: 0 auto;
+        width: 30px;
+        height: 200px;
+        background-color: lightgrey;
+    }
+    .selected {
+        border: 5px solid black;
+    }
+    .message {
+        width: 900px;
+        margin: 0 auto;
+    }
+    .error-message {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid red;
+        color: red;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+    }
+    .input-block {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+    .input {
+        width: 150px;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    .btn:hover {
+        background-color: beige;
+    }
+</style>
+<body>
+    <div class="content">
+        <div class="towers__wrapper">
+            <div class="towers">
+                <div id="t_1" class="tower">
+                    <div class="tower__skeleton">
+                        <div class="skeleton"></div>
+                    </div>
+                    <div class="ring hidden"></div>
+                </div>
+                <div id="t_2" class="tower">
+                    <div class="tower__skeleton">
+                        <div class="skeleton"></div>
+                    </div>
+                    <div class="ring hidden"></div>
+                </div>
+                <div id="t_3" class="tower">
+                    <div class="tower__skeleton">
+                        <div class="skeleton"></div>
+                    </div>
+                    <div class="ring hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="input-block" method="post" action="/index.php">
+        <div class="from-input">
+            <label>
+                <input required class="input" name="from" type="number" placeholder="С какой башни?">
+            </label>
+        </div>
+        <div class="to-input">
+            <label>
+                <input required class="input" name="to" type="number" placeholder="На какую башню?">
+            </label>
+        </div>
+        <div class="btn">
+            <button class="input" type="submit">Ввести</button>
+        </div>
+    </form>
+</body>
+<script>
+    if ({{showErrorMessage}}) {
+        const message = document.createElement('div');
+        message.classList.add('message');
+        const errorMessage = document.createElement('div');
+        errorMessage.classList.add('error-message');
+        const text = document.createElement('span');
+        text.innerText = '{{errorMessage}}';
+        errorMessage.appendChild(text);
+        message.appendChild(errorMessage);
+        document.body.appendChild(message);
+    }
+    const drawState = state => {
+        state.forEach((tower, index) => {
+            if (tower.length === 0) {
+                return;
+            }
+            const towerId = 't_' + (index + 1);
+            const towerElement = document.querySelector('#' + towerId);
+            const hiddenRing = towerElement.querySelector('.hidden');
+            hiddenRing.remove();
+            tower.forEach(ring => {
+                const ringWrapper = document.createElement('div');
+                ringWrapper.classList.add('ring_wrapper');
+                const ringElement = document.createElement('div');
+                ringElement.classList.add('ring');
+                ringElement.classList.add('visible');
+                ringElement.classList.add('n_' + ring);
+                ringWrapper.appendChild(ringElement);
+                towerElement.appendChild(ringWrapper);
+            });
+        });
+    };
+    drawState({{gameState}});
+</script>
+</html>

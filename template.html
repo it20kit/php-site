@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ханойские башни</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .success-block {
+        width: 900px;
+        height: 500px;
+        background-color: beige;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        font-family: Arial,serif;
+        border: 1px solid black;
+    }
+    .input-block {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+    .input {
+        width: 150px;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    .btn:hover {
+        background-color: beige;
+    }
+</style>
+<body>
+<div class="content">
+    <div class="success-block">
+        <div>{{message}}</div>
+    </div>
+</div>
+<form class="input-block" action="{{action}}">
+    <div class="btn">
+        <button class="input" type="submit">{{buttonMessage}}</button>
+    </div>
+</form>
+</body>
+</html>
