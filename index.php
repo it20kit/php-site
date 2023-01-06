@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-
+//asdsdaasdsad
 
 $store = file_get_contents("./store");
 $store = json_decode($store, true);
