@@ -44,7 +44,31 @@ function move(array $state, int $from, int $to): array {
 }
 
 
-function check(array $state, int $from, int $to): int {
+function generateGameState(int $ringCount, int $towerCount, int $where): array{
+  $state = [];
+  for($i = 0; $i < $towerCount; $i++){
+    $state[] = [];
+  }
+  for($i = $ringCount; $i >= 1; $i--){
+    $state[$where][] = $i;
+  }
+  return $state;
+}
+
+$initialTowers = generateGameState(3, 3, 0);
+
+function win($initialTowers, $towers){
+  $winState = $initialState;
+  $firstTower = $winState[0];
+  $winState[count($winState) - 1] = $firstTower;
+  $winState[0] = [];
+
+  return $towers === $winState;
+}
+
+
+
+function check(array $initialTowers,  array $state, int $from, int $to): int {
   //var_dump($from);
   //var_dump($to);
   $a = $state[$from];
@@ -59,6 +83,8 @@ function check(array $state, int $from, int $to): int {
   }
 
   return 3;
+  
+
 }
 
 
