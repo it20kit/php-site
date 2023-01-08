@@ -57,7 +57,7 @@ function generateGameState(int $ringCount, int $towerCount, int $where): array{
 
 $initialTowers = generateGameState(3, 3, 0);
 
-function win($initialTowers, $towers){
+function win(array $initialState, array $towers){
   $winState = $initialState;
   $firstTower = $winState[0];
   $winState[count($winState) - 1] = $firstTower;
@@ -68,7 +68,7 @@ function win($initialTowers, $towers){
 
 
 
-function check(array $initialTowers,  array $state, int $from, int $to): int {
+function check(array $state, int $from, int $to): int {
   //var_dump($from);
   //var_dump($to);
   $a = $state[$from];
@@ -105,10 +105,15 @@ if (isset($_POST['from']) && isset($_POST['to'])) {
     }
 }
 
-$html = file_get_contents('./index.html');
+$win = win($initialTowers,$state);
+var_dump($win);
 
-////$store["score"] = $step;
-///$store = json_encode($step);
+if($win === true){
+  $html = file_get_contents("./template.html");
+  $state = generateGameState(3, 3, 0);
+}else{
+  $html = file_get_contents('./index.html');
+}
 
 $store["state"] = $state;
 $store = json_encode($store);
